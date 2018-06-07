@@ -14,9 +14,7 @@ namespace MarsRovers.Domain
 
             var endingPosition = command.Execute(startingPosition);
 
-            endingPosition.X.Should().Be(0);
-            endingPosition.Y.Should().Be(0);
-            endingPosition.Facing.Should().Be(Direction.West);
+            endingPosition.Should().Be(new Position(0, 0, Direction.West));
         }        
     }
 }
