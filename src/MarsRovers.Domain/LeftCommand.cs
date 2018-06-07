@@ -4,7 +4,7 @@ namespace MarsRovers.Domain
     {
         public Position Execute(Position current)
         {
-            throw new System.NotImplementedException();
+            return new Position(current.X, current.Y, current.Facing.RotateLeft());
         }
     }
 }
