@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace MarsRovers.Domain
 {
-    public class Class1
+    public enum  Direction
     {
+        North = 'N',
+        East = 'E',
+        South = 'S',
+        West = 'W'
     }
 }
