@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 
 namespace MarsRovers.Domain.UnitTests
@@ -12,7 +6,6 @@ namespace MarsRovers.Domain.UnitTests
     [TestFixture]
     public class WhenUsingTheRoverToPlayMarsRovers
     {
-        // Should set the maximum size of a grid
         [Test]
         public void ShouldStartTheRoverAtPositionZeroFacingNorth()
         {
@@ -29,13 +22,18 @@ namespace MarsRovers.Domain.UnitTests
         [TestCase("RM" , 1, 0, Direction.East)]
         [TestCase("RMLLM", 0, 0, Direction.West)]
         [TestCase("MLLM", 0, 0, Direction.South)]
-        public void ShouldMoveEastWhenCommandLIsExecuted(string command, int x, int y, Direction direction)
+        [TestCase("LM", 9, 0, Direction.West)]
+        [TestCase("MMMMMMMMMM", 0, 0, Direction.North)]
+        [TestCase("LLM", 0, 9, Direction.South)]
+        [TestCase("RRM", 0, 9, Direction.South)]
+        [TestCase("RMMMMMMMMMM", 0, 0, Direction.East)]
+        public void ShouldMoveByCommandToAnExpectedEndPosition(string command, int endX, int endY, Direction endDirection)
         {
             var rover = new Rover();
 
             rover.Execute(command);
 
-            rover.CurrentPosition.Should().Be(new Position(x, y, direction));
+            rover.CurrentPosition.Should().Be(new Position(endX, endY, endDirection));
         }
     }
 }

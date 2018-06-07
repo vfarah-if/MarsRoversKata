@@ -19,5 +19,20 @@ namespace MarsRovers.Domain.UnitTests
 
             endingPosition.Should().Be(new Position(endX, endY, endDirection));
         }
+
+
+        [TestCase(0, 0, Direction.West, 9, 0, Direction.West)]
+        [TestCase(0, 9, Direction.North, 0, 0, Direction.North)]
+        [TestCase(0, 0, Direction.South, 0, 9, Direction.South)]
+        [TestCase(9, 0, Direction.East, 0, 0, Direction.East)]
+        public void ShouldWrapTheTenByTenGridWhenMovingoffTheEdge(int startX, int startY, Direction startDirection, int endX, int endY, Direction endDirection)
+        {
+            var startingPosition = new Position(startX, startY, startDirection);
+            var command = new MoveCommand(10);
+
+            var endingPosition = command.Execute(startingPosition);
+
+            endingPosition.Should().Be(new Position(endX, endY, endDirection));
+        }
     }
 }
