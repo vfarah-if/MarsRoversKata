@@ -13,15 +13,14 @@ namespace MarsRovers.Domain.UnitTests
     public class WhenUsingTheRoverToPlayMarsRovers
     {
         // Should set the maximum size of a grid
-        // Should have something to represent the direction or compass points
         [Test]
         public void ShouldStartTheRoverAtPositionZeroFacingNorth()
         {
+            var expectedStartingPosition = new Position(0, 0, Direction.North);
+
             var rover = new Rover();
 
-            rover.X.Should().Be(0);
-            rover.Y.Should().Be(0);
-            rover.Facing.Should().Be(Direction.North);
+            rover.CurrentPosition.Should().Be(expectedStartingPosition);
         }
 
         [TestCase("L", 0, 0, Direction.West)]
@@ -36,9 +35,7 @@ namespace MarsRovers.Domain.UnitTests
 
             rover.Execute(command);
 
-            rover.X.Should().Be(x);
-            rover.Y.Should().Be(y);
-            rover.Facing.Should().Be(direction);
+            rover.CurrentPosition.Should().Be(new Position(x, y, direction));
         }
     }
 }

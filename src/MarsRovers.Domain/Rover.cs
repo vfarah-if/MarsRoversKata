@@ -8,29 +8,35 @@ namespace MarsRovers.Domain
 {
     public class Rover
     {
+        private readonly IDictionary<char, IRoverCommand> roverCommands
+            = new Dictionary<char, IRoverCommand>
+            {
+                {'L', new LeftCommand()}
+            };
+
         public Rover(): this(0,0,Direction.North)
-        {
-            
+        {    
         }
 
         private Rover(int x, int y, Direction direction)
         {
-            X = x;
-            Y = y;
-            Facing = direction;
+           CurrentPosition = new Position(x, y, direction);
         }
 
-        public int X { get; private set; }
-        public int Y { get; private set; }
-        public Direction Facing { get; private set; }
+        public Position CurrentPosition {get; private set;}
 
         public void Execute(params char[] commands)
         {
             foreach (var command in commands)
             {
+                if (roverCommands.ContainsKey(command))
+                {
+                    CurrentPosition = roverCommands[command].Execute(CurrentPosition);
+                    continue;
+                }
+                
                 if (command == 'L')
                 {
-                    MoveLeft();
                 }
 
                 if (command == 'R')
@@ -56,20 +62,20 @@ namespace MarsRovers.Domain
 
         private void Move()
         {
-            switch (Facing)
+            switch (CurrentPosition.Facing)
             {
                 case Direction.North:
-                    Y = Y + 1;
+                    CurrentPosition = new Position(CurrentPosition.X, CurrentPosition.Y + 1, CurrentPosition.Facing);
                     break;
                 case Direction.East:
-                    X = X + 1;
+                    CurrentPosition = new Position(CurrentPosition.X + 1, CurrentPosition.Y, CurrentPosition.Facing);
                     break;
                 case Direction.West:
-                    X = X - 1;
+                    CurrentPosition = new Position(CurrentPosition.X - 1, CurrentPosition.Y, CurrentPosition.Facing);
                     break;
                 case Direction.South:
-                    Y = Y - 1;
-                    break;
+                    CurrentPosition = new Position(CurrentPosition.X, CurrentPosition.Y - 1, CurrentPosition.Facing);
+                    break;                  
                 default: throw new NotSupportedException();
             }
         }
@@ -77,12 +83,7 @@ namespace MarsRovers.Domain
 
         private void MoveRight()
         {
-            Facing = Facing.RotateRight();
-        }
-
-        private void MoveLeft()
-        {
-            Facing = Facing.RotateLeft();
+            CurrentPosition = new Position(CurrentPosition.X, CurrentPosition.Y, CurrentPosition.Facing.RotateRight());
         }
     }
 }
