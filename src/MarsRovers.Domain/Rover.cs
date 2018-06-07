@@ -12,19 +12,20 @@ namespace MarsRovers.Domain
             = new Dictionary<char, IRoverCommand>
             {
                 {'L', new LeftCommand()},
-                {'R', new RightCommand()}
+                {'R', new RightCommand()},
+                {'M', new MoveCommand()}
             };
 
-        public Rover(): this(0,0,Direction.North)
-        {    
+        public Rover() : this(0, 0, Direction.North)
+        {
         }
 
         private Rover(int x, int y, Direction direction)
         {
-           CurrentPosition = new Position(x, y, direction);
+            CurrentPosition = new Position(x, y, direction);
         }
 
-        public Position CurrentPosition {get; private set;}
+        public Position CurrentPosition { get; private set; }
 
         public void Execute(params char[] commands)
         {
@@ -33,11 +34,6 @@ namespace MarsRovers.Domain
                 if (roverCommands.ContainsKey(command))
                 {
                     CurrentPosition = roverCommands[command].Execute(CurrentPosition);
-                }           
-
-                if (command == 'M')
-                {
-                    Move();
                 }
             }
         }
@@ -47,27 +43,6 @@ namespace MarsRovers.Domain
             foreach (var command in commands)
             {
                 Execute(command);
-            }
-        }
-
-
-        private void Move()
-        {
-            switch (CurrentPosition.Facing)
-            {
-                case Direction.North:
-                    CurrentPosition = new Position(CurrentPosition.X, CurrentPosition.Y + 1, CurrentPosition.Facing);
-                    break;
-                case Direction.East:
-                    CurrentPosition = new Position(CurrentPosition.X + 1, CurrentPosition.Y, CurrentPosition.Facing);
-                    break;
-                case Direction.West:
-                    CurrentPosition = new Position(CurrentPosition.X - 1, CurrentPosition.Y, CurrentPosition.Facing);
-                    break;
-                case Direction.South:
-                    CurrentPosition = new Position(CurrentPosition.X, CurrentPosition.Y - 1, CurrentPosition.Facing);
-                    break;                  
-                default: throw new NotSupportedException();
             }
         }
     }
