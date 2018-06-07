@@ -7,7 +7,7 @@ namespace MarsRovers.Domain
     public class LeftCommandTestFixture
     {
         [Test]
-        public void Should_Rotate_Facing_Left()
+        public void ShouldRotateFacingLeft()
         {
             var startingPosition = new Position(0, 0, Direction.North);
             var command = new LeftCommand();

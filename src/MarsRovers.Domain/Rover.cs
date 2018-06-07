@@ -32,13 +32,8 @@ namespace MarsRovers.Domain
                 if (roverCommands.ContainsKey(command))
                 {
                     CurrentPosition = roverCommands[command].Execute(CurrentPosition);
-                    continue;
                 }
-                
-                if (command == 'L')
-                {
-                }
-
+            
                 if (command == 'R')
                 {
                     MoveRight();
