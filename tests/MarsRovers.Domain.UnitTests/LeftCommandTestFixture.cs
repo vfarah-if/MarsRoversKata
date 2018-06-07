@@ -1,7 +1,7 @@
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace MarsRovers.Domain
+namespace MarsRovers.Domain.UnitTests
 {
     [TestFixture]
     public class LeftCommandTestFixture

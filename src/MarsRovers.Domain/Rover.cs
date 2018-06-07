@@ -11,7 +11,8 @@ namespace MarsRovers.Domain
         private readonly IDictionary<char, IRoverCommand> roverCommands
             = new Dictionary<char, IRoverCommand>
             {
-                {'L', new LeftCommand()}
+                {'L', new LeftCommand()},
+                {'R', new RightCommand()}
             };
 
         public Rover(): this(0,0,Direction.North)
@@ -32,12 +33,7 @@ namespace MarsRovers.Domain
                 if (roverCommands.ContainsKey(command))
                 {
                     CurrentPosition = roverCommands[command].Execute(CurrentPosition);
-                }
-            
-                if (command == 'R')
-                {
-                    MoveRight();
-                }
+                }           
 
                 if (command == 'M')
                 {
@@ -73,12 +69,6 @@ namespace MarsRovers.Domain
                     break;                  
                 default: throw new NotSupportedException();
             }
-        }
-
-
-        private void MoveRight()
-        {
-            CurrentPosition = new Position(CurrentPosition.X, CurrentPosition.Y, CurrentPosition.Facing.RotateRight());
         }
     }
 }
