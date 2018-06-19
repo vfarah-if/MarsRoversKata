@@ -9,7 +9,7 @@ namespace MarsRovers.Domain.UnitTests
         [Test]
         public void ShouldStartTheRoverAtPositionZeroFacingNorth()
         {
-            var expectedStartingPosition = new Position(0, 0, Direction.North);
+            var expectedStartingPosition = new PositionInfo(0, 0, Direction.North);
 
             var rover = new Rover();
 
@@ -33,7 +33,7 @@ namespace MarsRovers.Domain.UnitTests
 
             rover.Execute(command);
 
-            rover.CurrentPosition.Should().Be(new Position(endX, endY, endDirection));
+            rover.CurrentPosition.Should().Be(new PositionInfo(endX, endY, endDirection));
         }
     }
 }

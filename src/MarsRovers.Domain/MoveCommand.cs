@@ -15,7 +15,7 @@ namespace MarsRovers.Domain
             this.maxGridSize = maxGridSize - 1;
         }
 
-        public Position Execute(Position current)
+        public PositionInfo Execute(PositionInfo current)
         {
             switch (current.Facing)
             {
@@ -40,44 +40,44 @@ namespace MarsRovers.Domain
             }
         }
 
-        private Position MoveSouth(Position current)
+        private PositionInfo MoveSouth(PositionInfo current)
         {
-            var y = current.Y - 1;
+            var y = current.Position.Y - 1;
             if (y < 0)
             {
                 y = maxGridSize;
             }
-            return new Position(current.X, y, current.Facing);
+            return new PositionInfo(current.Position.X, y, current.Facing);
         }
 
-        private Position MoveNorth(Position current)
+        private PositionInfo MoveNorth(PositionInfo current)
         {
-            var y = current.Y + 1;
+            var y = current.Position.Y + 1;
             if (y > maxGridSize)
             {
                 y = 0;
             }
-            return new Position(current.X, y, current.Facing);
+            return new PositionInfo(current.Position.X, y, current.Facing);
         }
 
-        private Position MoveWest(Position current)
+        private PositionInfo MoveWest(PositionInfo current)
         {
-            var x = current.X - 1;
+            var x = current.Position.X - 1;
             if (x < 0)
             {
                 x = maxGridSize;
             }
-            return new Position(x, current.Y, current.Facing);
+            return new PositionInfo(x, current.Position.Y, current.Facing);
         }
 
-        private Position MoveEast(Position current)
+        private PositionInfo MoveEast(PositionInfo current)
         {
-            var x = current.X + 1;
+            var x = current.Position.X + 1;
             if (x > maxGridSize)
             {
                 x = 0;
             }
-            return new Position(x, current.Y, current.Facing);
+            return new PositionInfo(x, current.Position.Y, current.Facing);
         }
     }
 }

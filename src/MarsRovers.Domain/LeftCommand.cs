@@ -2,9 +2,9 @@ namespace MarsRovers.Domain
 {
     public class LeftCommand : IRoverCommand
     {
-        public Position Execute(Position current)
+        public PositionInfo Execute(PositionInfo current)
         {
-            return new Position(current.X, current.Y, current.Facing.RotateLeft());
+            return new PositionInfo(current.Position.X, current.Position.Y, current.Facing.RotateLeft());
         }
     }
 }

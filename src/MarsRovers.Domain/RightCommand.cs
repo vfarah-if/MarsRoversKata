@@ -2,9 +2,9 @@
 {
     public class RightCommand: IRoverCommand
     {
-        public Position Execute(Position current)
+        public PositionInfo Execute(PositionInfo current)
         {
-            return new Position(current.X, current.Y, current.Facing.RotateRight());
+            return new PositionInfo(current.Position.X, current.Position.Y, current.Facing.RotateRight());
         }
     }
 }

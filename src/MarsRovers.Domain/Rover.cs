@@ -18,10 +18,10 @@ namespace MarsRovers.Domain
 
         private Rover(int x, int y, Direction direction)
         {
-            CurrentPosition = new Position(x, y, direction);
+            CurrentPosition = new PositionInfo(x, y, direction);
         }
 
-        public Position CurrentPosition { get; private set; }
+        public PositionInfo CurrentPosition { get; private set; }
 
         public void Execute(params char[] commands)
         {

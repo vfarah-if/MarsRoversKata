@@ -10,14 +10,20 @@ namespace MarsRovers.Domain.UnitTests
         [TestCase(0, 1, Direction.South, 0, 0, Direction.South)]
         [TestCase(0, 0, Direction.East, 1, 0, Direction.East)]
         [TestCase(1, 0, Direction.West, 0, 0, Direction.West)]
-        public void ShouldMoveForwardInARelativeDirection(int startX, int startY, Direction startDirection, int endX, int endY, Direction endDirection)
+        public void ShouldMoveForwardInARelativeDirection(
+            int startX, 
+            int startY, 
+            Direction startDirection, 
+            int endX, 
+            int endY, 
+            Direction endDirection)
         {
-            var startingPosition = new Position(startX, startY, startDirection);
+            var startingPosition = new PositionInfo(startX, startY, startDirection);
             var command = new MoveCommand();
 
             var endingPosition = command.Execute(startingPosition);
 
-            endingPosition.Should().Be(new Position(endX, endY, endDirection));
+            endingPosition.Should().Be(new PositionInfo(endX, endY, endDirection));
         }
 
 
@@ -25,14 +31,20 @@ namespace MarsRovers.Domain.UnitTests
         [TestCase(0, 9, Direction.North, 0, 0, Direction.North)]
         [TestCase(0, 0, Direction.South, 0, 9, Direction.South)]
         [TestCase(9, 0, Direction.East, 0, 0, Direction.East)]
-        public void ShouldWrapTheTenByTenGridWhenMovingoffTheEdge(int startX, int startY, Direction startDirection, int endX, int endY, Direction endDirection)
+        public void ShouldWrapTheTenByTenGridWhenMovingoffTheEdge(
+            int startX, 
+            int startY, 
+            Direction startDirection, 
+            int endX, 
+            int endY, 
+            Direction endDirection)
         {
-            var startingPosition = new Position(startX, startY, startDirection);
+            var startingPosition = new PositionInfo(startX, startY, startDirection);
             var command = new MoveCommand(10);
 
             var endingPosition = command.Execute(startingPosition);
 
-            endingPosition.Should().Be(new Position(endX, endY, endDirection));
+            endingPosition.Should().Be(new PositionInfo(endX, endY, endDirection));
         }
     }
 }

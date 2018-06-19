@@ -12,12 +12,12 @@ namespace MarsRovers.Domain.UnitTests
         [Test]
         public void ShouldRotateFacingRight()
         {
-            var startingPosition = new Position(0, 0, Direction.North);
+            var startingPosition = new PositionInfo(0, 0, Direction.North);
             var command = new RightCommand();
 
             var endingPosition = command.Execute(startingPosition);
 
-            endingPosition.Should().Be(new Position(0, 0, Direction.East));
+            endingPosition.Should().Be(new PositionInfo(0, 0, Direction.East));
         }
     }
 }

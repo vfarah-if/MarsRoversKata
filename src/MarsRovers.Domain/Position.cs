@@ -1,36 +1,46 @@
+﻿using System;
+
 namespace MarsRovers.Domain
 {
-    public struct Position
+    public struct Position : IEquatable<Position>
     {
-        public Position(int x, int y, Direction facing) : this()
+
+        public Position(int x, int y)
         {
             X = x;
             Y = y;
-            Facing = facing;
         }
 
-        public int X {get; private set;}
-        public int Y {get; private set;}
-        public Direction Facing {get; private set;}
+        public int X { get; }
+        public int Y { get; }
 
         public override bool Equals(object obj)
         {
-            if (!(obj is Position))
-                return false;
+            return obj is Position && Equals((Position)obj);
+        }
 
-            var other = (Position)obj; 
-
-            return other.X == X 
-                && other.Y == Y
-                && other.Facing == Facing;            
+        public bool Equals(Position other)
+        {
+            return X == other.X &&
+                   Y == other.Y;
         }
 
         public override int GetHashCode()
         {
-            return X.GetHashCode() * 17 
-                + Y.GetHashCode() * 17 
-                + Facing.GetHashCode();
+            var hashCode = 1861411795;
+            hashCode = hashCode * -1521134295 + X.GetHashCode();
+            hashCode = hashCode * -1521134295 + Y.GetHashCode();
+            return hashCode;
         }
 
+        public static bool operator ==(Position position1, Position position2)
+        {
+            return position1.Equals(position2);
+        }
+
+        public static bool operator !=(Position position1, Position position2)
+        {
+            return !(position1 == position2);
+        }
     }
 }
