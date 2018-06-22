@@ -19,5 +19,17 @@ namespace MarsRovers.Domain.UnitTests
 
             endingPosition.Should().Be(new PositionInfo(0, 0, Direction.East));
         }
+
+        [Test]
+        public void ShouldHaveObstruction_WhenAnObstructionIsSetAtTheSamePosition()
+        {
+            var startingPosition = new PositionInfo(0, 0, Direction.North);
+            var obstruction = startingPosition.Position;
+            var command = new RightCommand(obstruction);
+
+            var endingPosition = command.Execute(startingPosition);
+
+            endingPosition.HasObstruction.Should().BeTrue();
+        }
     }
 }

@@ -46,5 +46,26 @@ namespace MarsRovers.Domain.UnitTests
 
             endingPosition.Should().Be(new PositionInfo(endX, endY, endDirection));
         }
+
+        [TestCase(0, 0, Direction.West, 9, 0, Direction.West, true)]
+        [TestCase(0, 9, Direction.North, 0, 0, Direction.North, false)]
+        public void ShouldShowValidObstructionInformation(
+            int startX,
+            int startY,
+            Direction startDirection,
+            int endX,
+            int endY,
+            Direction endDirection,
+            bool hasObstruction)
+        {
+            var startingPosition = new PositionInfo(startX, startY, startDirection);
+            var obstruction = new Position(9, 0);
+            var command = new MoveCommand(10, obstruction);
+            var expectedEndPositionInfo = new PositionInfo(endX, endY, endDirection, hasObstruction);
+
+            var endingPosition = command.Execute(startingPosition);
+
+            endingPosition.Should().Be(expectedEndPositionInfo);
+        }
     }
 }

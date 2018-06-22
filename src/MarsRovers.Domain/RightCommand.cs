@@ -1,10 +1,21 @@
 ﻿namespace MarsRovers.Domain
 {
-    public class RightCommand: IRoverCommand
+    public class RightCommand : RoverCommandBase
     {
-        public PositionInfo Execute(PositionInfo current)
+        public RightCommand() 
         {
-            return new PositionInfo(current.Position.X, current.Position.Y, current.Facing.RotateRight());
+        }
+
+        public RightCommand(params Position[] obstructions) 
+            : base(obstructions)
+        {
+        }
+
+        public override PositionInfo Execute(PositionInfo current)
+        {
+            var x = current.Position.X;
+            var y = current.Position.Y;
+            return new PositionInfo(x, y, current.Facing.RotateRight(), this.HasObstructionAt(x, y));
         }
     }
 }

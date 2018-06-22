@@ -35,5 +35,16 @@ namespace MarsRovers.Domain.UnitTests
 
             rover.CurrentPosition.Should().Be(new PositionInfo(endX, endY, endDirection));
         }
+
+        [Test]
+        public void ShouldStartTheRoverAtPositionZeroWithObstruction()
+        {
+            var obstruction = new Position(0, 0);
+            var expectedStartingPosition = new PositionInfo(0, 0, Direction.North, true);
+
+            var rover = new Rover(obstruction);
+
+            rover.CurrentPosition.Should().Be(expectedStartingPosition);
+        }
     }
 }

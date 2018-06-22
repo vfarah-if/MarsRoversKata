@@ -1,21 +1,24 @@
 ﻿using System;
+using System.Linq;
 
 namespace MarsRovers.Domain
 {
-    public class MoveCommand : IRoverCommand
+    public class MoveCommand : RoverCommandBase
     {
         private readonly int maxGridSize;
 
-        public MoveCommand() : this(10)
+        public MoveCommand() 
+            : this(10, Enumerable.Empty<Position>().ToArray())
         {
         }
 
-        public MoveCommand(int maxGridSize)
+        public MoveCommand(int maxGridSize, params Position[] obstructions) 
+            : base(obstructions)
         {
             this.maxGridSize = maxGridSize - 1;
         }
 
-        public PositionInfo Execute(PositionInfo current)
+        public override PositionInfo Execute(PositionInfo current)
         {
             switch (current.Facing)
             {
@@ -23,7 +26,6 @@ namespace MarsRovers.Domain
                     {
                         return MoveEast(current);
                     }
-
                 case Direction.West:
                     {
                         return MoveWest(current);
@@ -47,7 +49,11 @@ namespace MarsRovers.Domain
             {
                 y = maxGridSize;
             }
-            return new PositionInfo(current.Position.X, y, current.Facing);
+            return new PositionInfo(
+                current.Position.X, 
+                y, 
+                current.Facing, 
+                HasObstructionAt(current.Position.X, y));
         }
 
         private PositionInfo MoveNorth(PositionInfo current)
@@ -57,7 +63,11 @@ namespace MarsRovers.Domain
             {
                 y = 0;
             }
-            return new PositionInfo(current.Position.X, y, current.Facing);
+            return new PositionInfo(
+                current.Position.X, 
+                y, 
+                current.Facing, 
+                HasObstructionAt(current.Position.X, y));
         }
 
         private PositionInfo MoveWest(PositionInfo current)
@@ -67,7 +77,11 @@ namespace MarsRovers.Domain
             {
                 x = maxGridSize;
             }
-            return new PositionInfo(x, current.Position.Y, current.Facing);
+            return new PositionInfo(
+                x, 
+                current.Position.Y, 
+                current.Facing,
+                HasObstructionAt(x, current.Position.Y));
         }
 
         private PositionInfo MoveEast(PositionInfo current)
@@ -77,7 +91,11 @@ namespace MarsRovers.Domain
             {
                 x = 0;
             }
-            return new PositionInfo(x, current.Position.Y, current.Facing);
+            return new PositionInfo(
+                x, 
+                current.Position.Y, 
+                current.Facing,
+                HasObstructionAt(x, current.Position.Y));
         }
     }
 }
